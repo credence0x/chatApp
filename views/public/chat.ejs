@@ -1,0 +1,20 @@
+<div>
+    You can now chat with every user
+    <form id="publicChatForm">
+        <input id="first-user-id" type="hidden" value="<%= currentUser._id %>">
+            <input id="first-user-name" type="hidden" value="<%= currentUser.fullName %>">
+            <input id="chat-input" type="text" autocomplete="off" required>
+        <input type="submit", value="Submit">
+    </form>
+
+
+    <br><br>
+    <div id="chat">
+        <div id="publicChatBox"></div>
+        <% messages.forEach(message=>{ %>
+            <li><%= message.sender.fullName %> : <%= message.content %></li>
+       <% }) %>
+    </div>
+   
+        
+</div>

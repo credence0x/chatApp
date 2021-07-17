@@ -1,0 +1,32 @@
+<div>
+
+    <div>
+        Here is a list of users you can chat with privately
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    
+        
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(user=>{ %>
+
+                    <tr>
+                        
+                            <td>
+                                <a href="/private/<%= user._id %>/chat">  <%= user.fullName %> </a>
+                            </td>
+                            
+                       
+                        <br><br>
+
+                    </tr>
+
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
