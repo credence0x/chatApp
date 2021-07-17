@@ -2,28 +2,26 @@ const mongoose = require("mongoose"),
     User = require("./models/user"),
     passport = require("passport");
 
-mongoose.connect(
-    "mongodb://localhost:27017/ChatApp",
+mongoose.connect(process.env.MONGOODB.URI || "mongodb://localhost:27017/ChatApp",
     { useNewUrlParser: true, useUnifiedTopology: true }
 );
-mongoose.connection;
 commands = []
 var people = [
     {
         name: {
-            first: "Jon",
-            last: "Wexler",
+            first: "Bolu",
+            last: "Tife",
         },
-        email: "jon@jonwexler.com",
-        password: "me"
+        email: "first@gmail.com",
+        password: "meh"
     },
     {
         name: {
             first: "Lanre",
             last: "Ojetokun",
         },
-        email: "eggplant@recipeapp.com",
-        password: "me"
+        email: "bot1@gmail.com",
+        password: "meh"
 
 
     },
@@ -32,8 +30,8 @@ var people = [
             first: "Vicole",
             last: "Odebunmi",
         },
-        email: "souffle@recipeapp.com",
-        password: "me"
+        email: "chosen@yes.com",
+        password: "meh"
 
     }
 ];
