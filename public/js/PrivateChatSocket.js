@@ -65,13 +65,14 @@ $(document).ready(() => {
 
 
   socket.on("incomingDm", (message) => {
-    let data = [firstId, secondId];
-    if (message.sender != data[0]) {
-      socket.emit("im online, update database to read", data)
-    }
+    
     displayMessage(message);
     for (let i = 0; i < 2; i++) {
       $(".chat-icon").fadeOut(200).fadeIn(200);
+    }
+    let data = [firstId, secondId];
+    if (message.sender != data[0]) {
+      socket.emit("im online, update database to read", data)
     }
   });
 
