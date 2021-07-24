@@ -7,7 +7,6 @@ $(document).ready(() => {
  
    socket.emit("join", chatIdData);
    socket.on("joined", (data) => {
-     console.log("public chat join emit received")     
    })
  
  
@@ -24,7 +23,6 @@ $(document).ready(() => {
        senderName:$("#first-user-name").val(),
      };
      
-     console.log(data)
      socket.emit("publicMessage", data);
      $("#chat-input").val("");
      return false;
@@ -46,7 +44,6 @@ $(document).ready(() => {
    });
  
    let displayMessage = (message) => {
-     console.log("message",message)
      $("#publicChatBox").prepend($("<li>").html(`<strong class="message ${getCurrentUserClass(message.sender)}">${message.senderName}</strong>: ${message.content}`
      ));
    };

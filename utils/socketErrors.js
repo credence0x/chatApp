@@ -1,6 +1,7 @@
 
 module.exports ={
-    emitError : (client, message, room = false, broadcast = false) => {
+    emitError : (client, message, error,room = false, broadcast = false) => {
+        console.log(error)
         if (!room) {
     
             if (broadcast) {

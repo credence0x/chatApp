@@ -22,7 +22,7 @@ module.exports = io => {
             let userId = Id;
             User.findByIdAndUpdate(userId, { online: client.id }, (error, user) => {
                 if (error) {
-                    emitError(client, "Something went wrong")
+                    emitError(client, "Something went wrong",error)
                 }
                 else {
                     console.log("user is now online")
@@ -33,22 +33,13 @@ module.exports = io => {
 
         client.on("disconnect", () => {
             console.log("it goes down when i disconnect")
-            // User.findOneAndUpdate({ online: client.id }, { $set : {online: "" }}, (error, user) => {
-            //     if (error) {
-            //         emitError(client, "We couldn't find user with socketId")
-            //     }
-            //     else{
-            //         console.log("cliend id",client.id)
-            //         console.log(user)
-            //     }
-            // })
             User.findOneAndUpdate({ online: client.id }, { $set : {online: "" }})
             .then(user=> {
                     console.log("cliend id",client.id)
                     console.log("I am online, yeah?",user.online)//still returns not updated user but changes are committed
             })
             .catch(error =>{
-                    emitError(client, "We couldn't find user with socketId")
+                    emitError(client, "We couldn't find user with socketId",error)
             })
                 
             

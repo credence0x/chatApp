@@ -1,11 +1,13 @@
 <div>
-    You can now chat with <%= secondUser.fullName %>
+    You can now chat with <%= secondUser.fullName %> 
+    <% if (secondUser.online){ %> 
+        <span style="color:orangered;margin-left: 30px;"><b id="online-status">Online</b></span>
+        <%}%>
         <form id="privateChatForm" >
             <input id="first-user-id" type="hidden" value="<%= currentUser._id %>">
             <input id="second-user-id" type="hidden" value="<%= secondUser._id %>">
             <input id="second-user-name" type="hidden" value="<%= secondUser.fullName %>">
             <input id="first-user-name" type="hidden" value="<%= currentUser.fullName %>">
-
             <input id="chat-input" type="text" autocomplete="off" required>
             <input type="submit" value="Submit">
         </form>

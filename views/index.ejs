@@ -1,7 +1,21 @@
 <div>
   Hello and welcome
-  <div>
-    <a href="/login">Login here</a><br>
-    <a href="/sign-up">Sign up here</a>
-  </div>
+  <% if (!loggedIn) {%>
+  <h2>Please log in to continue</h2>
+  <%} else {%>
+    <% if (currentUser.publicMessageAlert) { %>
+      <a href="/public/chat">
+      <h4>There are new messages on the public group chat</h4>
+      </a>
+     <%}%>
+
+     <% if (currentUser.privateMessageAlert) { %>
+      <a href="/private">
+      
+      <h4>You have <%= currentUser.privateMessageAlert.length %> new private messages </h4>
+      </a>
+      <% } %>
+    
+      <% } %>
+
 </div>

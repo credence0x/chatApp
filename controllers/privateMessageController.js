@@ -138,7 +138,7 @@ module.exports = {
                         User.findByIdAndUpdate(data.receiver,
                             { $push: { privateMessageAlert: data.sender } },
                             (error, update) => {
-                                if (error) { emitError(client, "Couldn't alert about new message") }
+                                if (error) { emitError(client, "Couldn't alert about new message", error) }
                                 else {
                                     endpoint.to(chatId).emit("incomingDm", message);
                                 }
@@ -147,7 +147,7 @@ module.exports = {
                 })
                 .catch(error => {
                     console.log(error)
-                    emitError(client, "Could not create private message")
+                    emitError(client, "Could not create private message", error)
                 })
 
 
@@ -157,13 +157,27 @@ module.exports = {
             let userId = data[0],
                 secondId = data[1];
             User.findById(userId, (error, user) => {
-                if (error) { emitError(client, "Could not change to read") }
-                else {
+                if (error) { emitError(client, "Could not change to read", error) }
+                else if (user){
                     let privateAlerts = user.privateMessageAlert;
                     updatePrivateAlert(privateAlerts, secondId, user.id, socket = true);
 
                 }
             })
+        })
+
+        client.on("checkOtherUserStatus", data => {
+            let secondId = data.secondId,
+                chatId = data.chatId;
+            User.findById(secondId,(error, user)=>{
+                if (error) {emitError(client,"Can't find out whether the other user is online or not")}
+                if (user){
+                    let status = Boolean(user.online)
+                    client.emit("serverConfirmStatus",status)
+                }
+                else{}//handle no user
+            })
+
         })
 
     },

@@ -6,9 +6,14 @@ const User = require("../models/user"),
 
 module.exports = {
     chat: (req, res, next) => {
-        let userId = res.locals.currentuser;
-        User.findByIdAndUpdate(userId,{publicMessageAlert:false},(error,done)=>{
-            if (error) {next(error)}   
+        let userId = res.locals.currentUser._id;
+        User.findByIdAndUpdate(userId,{publicMessageAlert:false},(error,user)=>{
+            if (error) {next(error)}
+            if(!user){
+                console.log("couldn't find user")
+                return
+            }
+            
         })
         PublicMessage.find({})
             .sort({ createdAt: -1 })
@@ -44,6 +49,20 @@ module.exports = {
                 content: content
             })
                 .then((message) => {
+                    User.find({},(error,users)=>{
+                        if (error) {emitError(client,"Could not update public alerts",error)}
+                        else{
+                            for (each in users){
+                                let user = users[each]
+                                if (!user.publicMessageAlert){
+                                    User.findByIdAndUpdate(user._id,{publicMessageAlert:true})
+                                    .catch(error=>{
+                                        emitError(client,"still couldn't update public alert",error)
+                                    })
+                                }
+                            }
+                        }
+                    })
                     message = {
                         sender: message.sender,
                         senderName: senderName,
@@ -53,7 +72,7 @@ module.exports = {
                 })
                 .catch(error => {
                     console.error(error)
-                    emitError(client,"Could not register public message")
+                    emitError(client,"Could not register public message",error)
                 })
 
 
