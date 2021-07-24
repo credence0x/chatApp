@@ -1,9 +1,15 @@
-const UserModel = require("../models/user"),
+const User = require("../models/user"),
     PublicMessage = require("../models/publicMessage"),
-    mongoose = require("mongoose")
+    mongoose = require("mongoose"),
+    { emitError } = require("../utils/socketErrors");
+
 
 module.exports = {
     chat: (req, res, next) => {
+        let userId = res.locals.currentuser;
+        User.findByIdAndUpdate(userId,{publicMessageAlert:false},(error,done)=>{
+            if (error) {next(error)}   
+        })
         PublicMessage.find({})
             .sort({ createdAt: -1 })
             .limit(10)
@@ -19,8 +25,8 @@ module.exports = {
             })
 
     },
-    respond: (endpoint, client) => {
-        console.log("public chat connection");
+    socketRespond: (endpoint, client) => {
+        console.log(`public chat socket id is ${client.id}`)
         client.on("join", () => {
             chatId = "publicChatRoom"
             client.join(chatId)
@@ -38,18 +44,22 @@ module.exports = {
                 content: content
             })
                 .then((message) => {
-                    // console.log(messge)
                     message = {
                         sender: message.sender,
                         senderName: senderName,
                         content: message.content
                     },
-                    
                         endpoint.to(chatId).emit("incomingPublicMessage", message);
+                })
+                .catch(error => {
+                    console.error(error)
+                    emitError(client,"Could not register public message")
                 })
 
 
         });
+
+        
 
     },
 }

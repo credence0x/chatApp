@@ -1,11 +1,23 @@
 <div>
     <h2>Sign-up</h2><br><br>
 
+
     <form method="POST" action="/sign-up/create">
-        <input name="first" placeholder="First Name" type="text" required>
-        <input name="last" placeholder="Last Name" type="text" required>
-        <input name="email" placeholder="E-mail" type="text" required>
-        <input name="password" placeholder="password" type="password" required>
-        <input type="submit" value="Submit">
+        <% if (repopulate) { %>
+            <input name="first" placeholder="First Name" type="text" value="<%= repopulate.first %>" required>
+            <input name="last" placeholder="Last Name" type="text" value="<%= repopulate.last %>" required>
+            <input name="email" placeholder="E-mail" type="text" value="<%= repopulate.email %>" required>
+            <input name="password" placeholder="password" type="password" required>
+            <input type="submit" value="Submit">
+
+        <% } else { %>
+            <input name="first" placeholder="First Name" type="text" required>
+            <input name="last" placeholder="Last Name" type="text" required>
+            <input name="email" placeholder="E-mail" type="text" required>
+            <input name="password" placeholder="password" type="password" required>
+            <input type="submit" value="Submit">
+
+        <% } %>
     </form>
+
 </div>

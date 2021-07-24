@@ -1,5 +1,6 @@
 const passport = require("passport"),
-    User = require("../models/user")
+    User = require("../models/user");
+
 getUserParams = body => {
     return {
         name: {
@@ -16,73 +17,103 @@ module.exports = {
     home: (req, res) => {
         res.render("index")
     },
+
     redirectView: (req, res, next) => {
         let redirectPath = res.locals.redirect;
         if (redirectPath) res.redirect(redirectPath);
         else next();
     },
+
     chatHome: (req, res, next) => {
-        let loggedIn = res.locals.loggedIn;
+        let loggedIn = req.isAuthenticated();
         if (loggedIn) {
             res.render("chatHome")
         }
-        else{
+        else {
             res.locals.redirect = "/login"
             req.flash("error", "You need to log in to be able to chat");
             next()
         }
-        
+
     },
+
+    validate: (req, res, next) => {
+        req.sanitizeBody("email")
+            .normalizeEmail({
+                all_lowercase: true
+            })
+            .trim();
+        req.check("email", "Email is invalid").isEmail();
+        req.check("password", "Password cannot be empty").notEmpty();
+        req.getValidationResult()
+            .then((error) => {
+                if (!error.isEmpty()) {
+                    let messages = error.array().map(e => e.msg);
+                    req.skip = true;
+                    req.flash("error", messages.join(" and "));
+                    res.locals.redirect = "/users/new";
+                    next();
+                } else {
+                    next();
+                }
+            });
+    },
+
     signUp: (req, res, next) => {
         let newUser = new User(getUserParams(req.body));
         User.register(newUser, req.body.password, (error, user) => {
             if (user) {
-                req.flash("success", "Registration was successful. Please login to continue");
+                req.flash("success", "Your registration was successful. Please login to continue");
                 res.locals.redirect = "/login"
                 next()
             } else {
-                if(error.name=="UserExistsError"){
-                    req.flash("error", "A user with the given email address already exists");
-                    res.locals.redirect = "/sign-up"
+                if (error.name == "UserExistsError") {
+                    // em = ErrorMessage
+                    let em = "A user with the given email address already exists"
+                    req.flash("error", em)
+                    let first = req.body.first,
+                        last = req.body.last,
+                        email = req.body.email;
+                    queryParams = `?first=${first}&last=${last}&email=${email}`
+                    res.locals.redirect = "/sign-up" + queryParams
                     next()
-                }
+                };
                 next(error)
             }
         })
-        
+
     },
+
     signUpPage: (req, res) => {
-        res.render("signUp")
+        let repopulate = req.query || false
+        console.log(req.body)
+        res.render("signUp", { repopulate: repopulate })
     },
+
     login: (req, res) => {
         res.render("login")
     },
-    validate: (req, res, next) => {
-        req.sanitizeBody("email").normalizeEmail({
-            all_lowercase: true
-        })
-            .trim();
-        req.check("email", "Email is invalid").isEmail();
-        req.check("password", "Password cannot be empty").notEmpty();
-        req.getValidationResult().then((error) => {
-            if (!error.isEmpty()) {
-                let messages = error.array().map(e => e.msg);
-                req.skip = true;
-                req.flash("error", messages.join(" and "));
-                res.locals.redirect = "/users/new";
-                next();
+
+   
+    authenticate: (req, res, next) => {
+        passport.authenticate('local', (err, user, info) => {
+            if (err) { next(err) }
+            else if (!user) {
+                req.flash("error", info.message)
+                res.locals.redirect = "/login"
+                next()
             } else {
-                next();
+                req.logIn(user, (err) => {
+                    if (err) { next(err); }
+                    req.flash("success", "Logged in successfully!")
+                    res.locals.redirect = "/chat"
+                    next()
+                });
             }
-        });
+        })(req, res, next);
+
     },
 
-    authenticate: passport.authenticate("local", {
-        failureRedirect: "/login",
-        failureFlash: "Failed to login.",
-        successRedirect: "/chat",
-        successFlash: "Logged in!"
-    }),
 
     logout: (req, res, next) => {
         req.logout();
