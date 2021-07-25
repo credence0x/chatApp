@@ -1,8 +1,9 @@
 const router = require('express').Router(),
-publicMessageController = require("../controllers/publicMessageController");
+    publicMessageController = require("../controllers/publicMessageController"),
+    {ensureLoggedIn} = require('connect-ensure-login');
 
-/* GET users listing. */
 
+router.use(ensureLoggedIn("/login"))
 router.get('/chat', publicMessageController.chat);
 
 module.exports = router;

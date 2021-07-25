@@ -8,11 +8,13 @@ $(document).ready(() => {
 
     chatIddata = [firstId, secondId]
 
-    socket.on("connect", () => {
-      //to make sure it rejoins after every disconnection
-      socket.emit("join", chatIddata);
-    });
-  
+  socket.on("connect", () => {
+    //to make sure it rejoins after every disconnection
+    socket.emit("join", chatIddata);
+  });
+  socket.on("connect_error", (err) => {
+    console.log(err.message); 
+});
   socket.on("joined", (data) => {
     window.chatId = data
   })
@@ -31,7 +33,7 @@ $(document).ready(() => {
         receiverName: secondName
       };
     socket.emit("privateMessage", data);
-    console.log("SID 1: ",socket.id)
+    console.log("SID 1: ", socket.id)
 
     $("#chat-input").val("");
     return false;
@@ -70,7 +72,7 @@ $(document).ready(() => {
 
 
   socket.on("incomingDm", (message) => {
-    console.log("SID 2: ",socket.id)
+    console.log("SID 2: ", socket.id)
 
     displayMessage(message);
     for (let i = 0; i < 2; i++) {

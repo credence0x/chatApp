@@ -21,7 +21,7 @@
             <% messages.forEach(message=> { %>
                 <li>
                     <% if (message.sender==currentUser.id){ %>
-                    <%= currentUser.fullName %> : <%= message.content %>
+                    Me : <%= message.content %>
                     <% } else { %>
                         <%= secondUser.fullName %> : <%= message.content %>
                         <% } %>

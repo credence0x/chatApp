@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/ChatApp",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: false 
+    useFindAndModify: false
   });
 const db = mongoose.connection;
 db.once("open", () => {
@@ -37,14 +37,15 @@ app.use(methodOverride("_method", {
   methods: ["POST", "GET"]
 }));
 app.use(cookieParser(process.env.COOKIE_SCRT || "bu6WQB5Ibsygaulina78opap928[93212^&*(!"));
-app.use(expressSession({
+const sessionMiddleware = expressSession({
   secret: process.env.SESSION_SCRT || "YYKkaxm9-sbsIbsygaulina78opap928[9",
   cookie: {
     maxAge: 4000000
   },
   resave: false,
   saveUninitialized: false
-}));
+})
+app.use(sessionMiddleware);
 app.use(connectFlash());
 
 app.use(passport.initialize());
@@ -65,6 +66,7 @@ app.use((req, res, next) => {
   res.locals.loggedIn = req.isAuthenticated();
   res.locals.currentUser = req.user;
   res.locals.public = false;
+  // console.log(req.session)
   next();
 });
 
@@ -97,6 +99,7 @@ if (require.main === module) {
   exports.port = port
 }
 
+exports.sessionMiddleware = sessionMiddleware
 io = require("socket.io")(server);
 require("./controllers/socketController")(io)
 

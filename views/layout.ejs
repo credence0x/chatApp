@@ -7,6 +7,7 @@
     <link rel="shortcut icon" type="image/png" href="/images/icon.png" />
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/generalScript.js"></script>
     <% if (loggedIn) { %>
       <script type="text/javascript" src="/js/PublicChatSocket.js"></script>
       <script type="text/javascript" src="/js/PrivateChatSocket.js"></script>
@@ -43,7 +44,7 @@
         <input type="hidden" id="current-user" value="<%= currentUser._id %>">
 				Logged in as <%= currentUser.fullName %>
 			</div>
-			<div class="log-out">
+			<div class="log-out" >
 				<a href="/logout">Log out</a>
 			</div>
 			<%} else {%>

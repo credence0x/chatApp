@@ -25,15 +25,8 @@ module.exports = {
     },
 
     chatHome: (req, res, next) => {
-        let loggedIn = req.isAuthenticated();
-        if (loggedIn) {
-            res.render("chatHome")
-        }
-        else {
-            res.locals.redirect = "/login"
-            req.flash("error", "You need to log in to be able to chat");
-            next()
-        }
+
+        res.render("chatHome")
 
     },
 
@@ -94,7 +87,7 @@ module.exports = {
         res.render("login")
     },
 
-   
+
     authenticate: (req, res, next) => {
         passport.authenticate('local', (err, user, info) => {
             if (err) { next(err) }
@@ -106,7 +99,11 @@ module.exports = {
                 req.logIn(user, (err) => {
                     if (err) { next(err); }
                     req.flash("success", "Logged in successfully!")
-                    res.locals.redirect = "/chat"
+                    if (!req.session.returnTo) {
+                        res.locals.redirect = "/chat"
+                    } else {
+                        res.locals.redirect = req.session.returnTo //connect-ensure-login variable
+                    }
                     next()
                 });
             }

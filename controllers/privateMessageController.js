@@ -2,7 +2,9 @@ const UserModel = require("../models/user"),
     PrivateMessage = require("../models/privateMessage"),
     User = require("../models/user"),
     mongoose = require("mongoose"),
-    { emitError } = require("../utils/socketErrors");
+    { emitError } = require("../utils/socketErrors"),
+    // jwt = require("jsonwebtoken"),
+    {sessionMiddleware} = require("../app");
 
 
 updatePrivateAlert = (alertList, secondIdString, userId, socket = false) => {
@@ -104,8 +106,9 @@ module.exports = {
     },
     socketRespond: (endpoint, client) => {
         console.log(`private chat socket id is ${client.id}`)
-
+        
         client.on("join", (data) => {
+            console.log("rrrrrrrrrrrrreeeeeeeeeeeeeeeqqqqqq", !!client.request.user)
             let firstId = data[0],
                 secondId = data[1],
                 joint = [firstId, secondId].sort()
@@ -135,10 +138,10 @@ module.exports = {
                         content: message.content
 
                     },
-                    //put alert of message in the second user's model
+                        //put alert of message in the second user's model
                         User.findByIdAndUpdate(data.receiver,
                             { $push: { privateMessageAlert: data.sender } },
-                            {new: true},
+                            { new: true },
                             (error, user) => {
                                 if (error) { emitError(client, "Couldn't alert about new message", error) }
                                 else if (user) {
