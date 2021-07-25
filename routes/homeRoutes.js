@@ -6,7 +6,7 @@ router.post('/sign-up/create', homeController.validate,homeController.signUp,hom
 router.get('/sign-up', homeController.signUpPage);
 router.get('/chat', homeController.chatHome, homeController.redirectView);
 router.get('/login', homeController.login);
-router.post('/login/authenticate', homeController.authenticate);
+router.post('/login/authenticate', homeController.authenticate, homeController.redirectView);
 router.get('/logout', homeController.logout, homeController.redirectView);
 
 

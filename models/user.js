@@ -7,12 +7,12 @@ const mongoose = require("mongoose"),
             first: {
                 type: String,
                 trim: true, // remove white spaces
-                required:true
+                required: true
             },
             last: {
                 type: String,
                 trim: true,
-                required:true
+                required: true
             }
         },
         email: {
@@ -21,10 +21,16 @@ const mongoose = require("mongoose"),
             lowercase: true,
             unique: true
         },
-        // apiToken: {
-        //     type: String,
-        // },
-        // courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
+        online: {
+            type: String //socketId
+        },
+        
+        privateMessageAlert: [{type: Schema.Types.ObjectId,ref:"User"}],
+
+        publicMessageAlert: {
+            type : Boolean
+        },
+
     }, {
         timestamps: true
     });

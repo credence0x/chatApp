@@ -1,14 +1,14 @@
 <div class="custom-form">
-    <form>
+    <form method="POST" action="/login/authenticate">
         <!-- Email input -->
         <div class="form-outline mb-4">
-          <input type="email" class="form-control" name="email"/>
+          <input type="email" class="form-control" name="email"required/>
           <label class="form-label" for="form2Example1">Email address</label>
         </div>
         
         <!-- Password input -->
         <div class="form-outline mb-4">
-            <input type="password" class="form-control" />
+            <input type="password" class="form-control" name="password" required/>
             <label class="form-label" for="form2Example2">Password</label>
           </div>
       

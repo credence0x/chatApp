@@ -7,23 +7,34 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Status</th>
+                    <th>Unread</th>
+
                     
         
                 </tr>
             </thead>
             <tbody>
                 <% users.forEach(user=>{ %>
-
+                    <% if (user.email!=currentUser.email) {%>
                     <tr>
                         
                             <td>
                                 <a href="/private/<%= user._id %>/chat">  <%= user.fullName %> </a>
                             </td>
-                            
+                            <td>
+                                <% if (user.online) { %> online  <% }%>
+                            </td>
+                            <td>
+                                <% if (user._id.toString() in allAlerts) { %>
+                                <%= allAlerts[user._id.toString()] %>
+                                <% } %>
+                            </td>
                        
                         <br><br>
 
                     </tr>
+                    <% } %>
 
                     <% }) %>
             </tbody>

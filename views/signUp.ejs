@@ -1,65 +1,107 @@
 <div class="custom-form">
-<form>
-    <!-- Email input -->
+  <form method="POST" action="/sign-up/create">
+    
+    
+  <% if (repopulate) { %>
+  <!-- Email -->
+  <div class="form-outline mb-4">
+    <input type="email"  name="email" class="form-control" value="<%= repopulate.email %>" required/>
+    <label class="form-label" for="form2Example1">Email address</label>
+  </div>
+    <!-- First Name -->
     <div class="form-outline mb-4">
-      <input type="email" class="form-control" />
-      <label class="form-label" for="form2Example1">Email address</label>
+      <input type="text" name="first" class="form-control" value="<%= repopulate.first %>" required/>
+      <label class="form-label" for="form2Example1">First Name</label>
     </div>
-    <!--Username-->
+    <!--Last name -->
     <div class="form-outline mb-4">
-        <input type="username" class="form-control" />
-        <label class="form-label" for="form2Example2">Username</label>
-      </div>
+      <input type="text" name="last" class="form-control" value="<%= repopulate.last %>" required/>
+      <label class="form-label" for="form2Example2">Last Name</label>
+    </div>
     <!-- Password input -->
     <div class="form-outline mb-4">
-        <input type="password" class="form-control" />
-        <label class="form-label" for="form2Example2">Password</label>
-      </div>
-  
+      <input type="password" name="password" class="form-control" required/>
+      <label class="form-label" for="form2Example2">Password</label>
+    </div>
+
     <!-- 2 column grid layout for inline styling -->
     <div class="row mb-4">
       <div class="col d-flex justify-content-center">
         <!-- Checkbox -->
         <div class="form-check text-center">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="form2Example3"
-            checked
-          />
+          <input class="form-check-input" type="checkbox" value="" id="form2Example3" checked />
           <label class="form-check-label" for="form2Example3"> Remember me </label>
         </div>
       </div>
-  
+
       <div class="col text-center">
         <!-- Simple link -->
         <a href="#!">Forgot password?</a>
       </div>
     </div>
-  
+
     <!-- Submit button -->
     <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
-  
+    <% } else { %>
+<!-- Email -->
+<div class="form-outline mb-4">
+  <input type="email"  name="email" class="form-control" required/>
+  <label class="form-label" for="form2Example1">Email address</label>
+</div>
+  <!-- First Name -->
+  <div class="form-outline mb-4">
+    <input type="text" name="first" class="form-control" required/>
+    <label class="form-label" for="form2Example1">First Name</label>
+  </div>
+  <!--Last name -->
+  <div class="form-outline mb-4">
+    <input type="text" name="last" class="form-control" required/>
+    <label class="form-label" for="form2Example2">Last Name</label>
+  </div>
+  <!-- Password input -->
+  <div class="form-outline mb-4">
+    <input type="password" name="password" class="form-control" required/>
+    <label class="form-label" for="form2Example2">Password</label>
+  </div>
+
+  <!-- 2 column grid layout for inline styling -->
+  <div class="row mb-4">
+    <div class="col d-flex justify-content-center">
+      <!-- Checkbox -->
+      <div class="form-check text-center">
+        <input class="form-check-input" type="checkbox" value="" id="form2Example3" checked />
+        <label class="form-check-label" for="form2Example3"> Remember me </label>
+      </div>
+    </div>
+
+    <div class="col text-center">
+      <!-- Simple link -->
+      <a href="#!">Forgot password?</a>
+    </div>
+  </div>
+
+  <!-- Submit button -->
+  <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+    <% } %>
     <!-- Register buttons -->
     <div class="text-center">
       <p>Not a member? <a href="views\signUp.ejs">Sign Up!</a></p>
       <p>or sign up with:</p>
       <button type="button" class="btn btn-primary btn-floating mx-1">
-        <img src="images/fontawesome-free-5.15.3-desktop/fontawesome-free-5.15.3-desktop/svgs/brands/facebook.svg" height="30" width="30" alt="facebook">
-      </button>
-  
-      <button type="button" class="btn btn-primary btn-floating mx-1">
-       <img src="images/fontawesome-free-5.15.3-desktop/fontawesome-free-5.15.3-desktop/svgs/brands/google.svg" height="30" width="30" alt="google" >
-      </button>
-  
-      <button type="button" class="btn btn-primary btn-floating mx-1">
-        <img src="images/fontawesome-free-5.15.3-desktop/fontawesome-free-5.15.3-desktop/svgs/brands/twitter.svg" height="30" width="30" alt="twitter">
+        <img src="images/fontawesome-free-5.15.3-desktop/fontawesome-free-5.15.3-desktop/svgs/brands/facebook.svg"
+          height="30" width="30" alt="facebook">
       </button>
 
       <button type="button" class="btn btn-primary btn-floating mx-1">
-        <img src="images/fontawesome-free-5.15.3-desktop/fontawesome-free-5.15.3-desktop/svgs/brands/youtube.svg" height="30" width="30" alt="youtube">
+        <img src="images/fontawesome-free-5.15.3-desktop/fontawesome-free-5.15.3-desktop/svgs/brands/google.svg"
+          height="30" width="30" alt="google">
       </button>
+
+      <button type="button" class="btn btn-primary btn-floating mx-1">
+        <img src="images/fontawesome-free-5.15.3-desktop/fontawesome-free-5.15.3-desktop/svgs/brands/twitter.svg"
+          height="30" width="30" alt="twitter">
+      </button>
+
 
     </div>
   </form>
