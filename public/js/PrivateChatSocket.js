@@ -1,18 +1,21 @@
 $(document).ready(() => {
-  let socket = io("/privateChat"),
+  var socket = io("/privateChat"),
+    yes = "yes",
     firstId = $("#first-user-id").val(), //firstUserId
     secondId = $("#second-user-id").val(),//secondUserId
-    firstName = $("#first-user-name").val(),//firstUserName
+    // firstName = $("#first-user-name").val(),//firstUserName
     secondName = $("#second-user-name").val(),//secondUserName
 
     chatIddata = [firstId, secondId]
 
-
-  socket.emit("join", chatIddata);
+    socket.on("connect", () => {
+      //to make sure it rejoins after every disconnection
+      socket.emit("join", chatIddata);
+    });
+  
   socket.on("joined", (data) => {
     window.chatId = data
   })
-
 
 
 
@@ -28,6 +31,8 @@ $(document).ready(() => {
         receiverName: secondName
       };
     socket.emit("privateMessage", data);
+    console.log("SID 1: ",socket.id)
+
     $("#chat-input").val("");
     return false;
   });
@@ -47,15 +52,15 @@ $(document).ready(() => {
         chatId: chatId,
         secondId: secondId
       }
-      socket.emit("checkOtherUserStatus",data)
+      socket.emit("checkOtherUserStatus", data)
     }
 
   }
   setInterval(checkStatus, 3000)
 
 
-  socket.on("serverConfirmStatus",(status)=>{
-    if (status==true){
+  socket.on("serverConfirmStatus", (status) => {
+    if (status == true) {
       $("#online-status").text("Online")
     } else {
       $("#online-status").text("")
@@ -65,7 +70,8 @@ $(document).ready(() => {
 
 
   socket.on("incomingDm", (message) => {
-    
+    console.log("SID 2: ",socket.id)
+
     displayMessage(message);
     for (let i = 0; i < 2; i++) {
       $(".chat-icon").fadeOut(200).fadeIn(200);
@@ -74,7 +80,7 @@ $(document).ready(() => {
     if (message.sender != data[0]) {
       socket.emit("im online, update database to read", data)
     }
-  });
+  })
 
 
 

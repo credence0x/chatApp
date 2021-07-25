@@ -135,11 +135,13 @@ module.exports = {
                         content: message.content
 
                     },
+                    //put alert of message in the second user's model
                         User.findByIdAndUpdate(data.receiver,
                             { $push: { privateMessageAlert: data.sender } },
-                            (error, update) => {
+                            {new: true},
+                            (error, user) => {
                                 if (error) { emitError(client, "Couldn't alert about new message", error) }
-                                else {
+                                else if (user) {
                                     endpoint.to(chatId).emit("incomingDm", message);
                                 }
                             }
@@ -158,7 +160,7 @@ module.exports = {
                 secondId = data[1];
             User.findById(userId, (error, user) => {
                 if (error) { emitError(client, "Could not change to read", error) }
-                else if (user){
+                else if (user) {
                     let privateAlerts = user.privateMessageAlert;
                     updatePrivateAlert(privateAlerts, secondId, user.id, socket = true);
 
@@ -169,13 +171,13 @@ module.exports = {
         client.on("checkOtherUserStatus", data => {
             let secondId = data.secondId,
                 chatId = data.chatId;
-            User.findById(secondId,(error, user)=>{
-                if (error) {emitError(client,"Can't find out whether the other user is online or not")}
-                if (user){
-                    let status = Boolean(user.online)
-                    client.emit("serverConfirmStatus",status)
+            User.findById(secondId, (error, user) => {
+                if (error) { emitError(client, "Can't find out whether the other user is online or not") }
+                if (user) {
+                    let status = Boolean(user.online);
+                    client.emit("serverConfirmStatus", status)
                 }
-                else{}//handle no user
+                else { }//handle no user
             })
 
         })
