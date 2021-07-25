@@ -1,12 +1,74 @@
-<div>
+<div class="custom-form">
+    <form>
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+          <input type="email" class="form-control" name="email"/>
+          <label class="form-label" for="form2Example1">Email address</label>
+        </div>
+        
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <input type="password" class="form-control" />
+            <label class="form-label" for="form2Example2">Password</label>
+          </div>
+      
+        <!-- 2 column grid layout for inline styling -->
+        <div class="row mb-4">
+          <div class="col d-flex justify-content-center">
+            <!-- Checkbox -->
+            <div class="form-check text-center">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="form2Example3"
+                checked
+              />
+              <label class="form-check-label" for="form2Example3"> Remember me </label>
+            </div>
+          </div>
+      
+          <div class="col text-center">
+            <!-- Simple link -->
+            <a href="#!">Forgot password?</a>
+          </div>
+        </div>
+      
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+      
+        <!-- Register buttons -->
+        <div class="text-center">
+          <p>Not a member? <a href="/sign-up">Sign Up!</a></p>
+          <p>or sign up with:</p>
+          <button type="button" class="btn btn-primary btn-floating mx-1">
+            <img src="/images/bootstrap-icons-1.5.0/facebook.svg" alt="Facebook">
+          </button>
+      
+          <button type="button" class="btn btn-primary btn-floating mx-1">
+           <img src="/images/bootstrap-icons-1.5.0/google.svg" alt="Google" >
+          </button>
+      
+          <button type="button" class="btn btn-primary btn-floating mx-1">
+            <img src="/images/bootstrap-icons-1.5.0/twitter.svg" alt="Twitter">
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- Add icon library -->
 
-    <h2>Login</h2><br><br>
-    <form method="POST" action="/login/authenticate">
-    <input type="text" name="email" placeholder="E-mail">
-    <input type="password" name="password" placeholder="Password">
-    <input type="submit" value="submit">
 
+<!-- Add font awesome icons to buttons  -->
+<p>Icon buttons:</p>
+<button class="btn btn-primary"><i class="fa fa-home"></i></button>
+<button class="btn"><i class="fa fa-bars"></i></button>
+<button class="btn"><i class="fa fa-trash"></i></button>
+<button class="btn"><i class="fa fa-close"></i></button>
+<button class="btn"><i class="fa fa-folder"></i></button>
 
-
-    </form>
-</div>
+<p>Icon buttons with text:</p>
+<button class="btn"><i class="fa fa-home"></i> Home</button>
+<button class="btn"><i class="fa fa-bars"></i> Menu</button>
+<button class="btn"><i class="fa fa-trash"></i> Trash</button>
+<button class="btn"><i class="fa fa-close"></i> Close</button>
+<button class="btn"><i class="fa fa-folder"></i> Folder</button>

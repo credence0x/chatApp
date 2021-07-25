@@ -2,7 +2,7 @@ const mongoose = require("mongoose"),
     User = require("./models/user"),
     passport = require("passport");
 
-mongoose.connect(process.env.MONGOODB.URI || "mongodb://localhost:27017/ChatApp",
+mongoose.connect("mongodb://localhost:27017/ChatApp",
     { useNewUrlParser: true, useUnifiedTopology: true }
 );
 commands = []
@@ -71,4 +71,3 @@ Promise.all(commands)
         console.log(`ERROR: ${error}`);
     });
 ////////////////////////////////////////////////////////////
-

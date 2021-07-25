@@ -1,11 +1,66 @@
-<div>
-    <h2>Sign-up</h2><br><br>
+<div class="custom-form">
+<form>
+    <!-- Email input -->
+    <div class="form-outline mb-4">
+      <input type="email" class="form-control" />
+      <label class="form-label" for="form2Example1">Email address</label>
+    </div>
+    <!--Username-->
+    <div class="form-outline mb-4">
+        <input type="username" class="form-control" />
+        <label class="form-label" for="form2Example2">Username</label>
+      </div>
+    <!-- Password input -->
+    <div class="form-outline mb-4">
+        <input type="password" class="form-control" />
+        <label class="form-label" for="form2Example2">Password</label>
+      </div>
+  
+    <!-- 2 column grid layout for inline styling -->
+    <div class="row mb-4">
+      <div class="col d-flex justify-content-center">
+        <!-- Checkbox -->
+        <div class="form-check text-center">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="form2Example3"
+            checked
+          />
+          <label class="form-check-label" for="form2Example3"> Remember me </label>
+        </div>
+      </div>
+  
+      <div class="col text-center">
+        <!-- Simple link -->
+        <a href="#!">Forgot password?</a>
+      </div>
+    </div>
+  
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+  
+    <!-- Register buttons -->
+    <div class="text-center">
+      <p>Not a member? <a href="views\signUp.ejs">Sign Up!</a></p>
+      <p>or sign up with:</p>
+      <button type="button" class="btn btn-primary btn-floating mx-1">
+        <img src="images/fontawesome-free-5.15.3-desktop/fontawesome-free-5.15.3-desktop/svgs/brands/facebook.svg" height="30" width="30" alt="facebook">
+      </button>
+  
+      <button type="button" class="btn btn-primary btn-floating mx-1">
+       <img src="images/fontawesome-free-5.15.3-desktop/fontawesome-free-5.15.3-desktop/svgs/brands/google.svg" height="30" width="30" alt="google" >
+      </button>
+  
+      <button type="button" class="btn btn-primary btn-floating mx-1">
+        <img src="images/fontawesome-free-5.15.3-desktop/fontawesome-free-5.15.3-desktop/svgs/brands/twitter.svg" height="30" width="30" alt="twitter">
+      </button>
 
-    <form method="POST" action="/sign-up/create">
-        <input name="first" placeholder="First Name" type="text" required>
-        <input name="last" placeholder="Last Name" type="text" required>
-        <input name="email" placeholder="E-mail" type="text" required>
-        <input name="password" placeholder="password" type="password" required>
-        <input type="submit" value="Submit">
-    </form>
+      <button type="button" class="btn btn-primary btn-floating mx-1">
+        <img src="images/fontawesome-free-5.15.3-desktop/fontawesome-free-5.15.3-desktop/svgs/brands/youtube.svg" height="30" width="30" alt="youtube">
+      </button>
+
+    </div>
+  </form>
 </div>
